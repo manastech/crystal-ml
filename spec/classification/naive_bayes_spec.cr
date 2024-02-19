@@ -46,7 +46,7 @@ describe CrystalML::Classification::NaiveBayesClassifier do
       classifier = CrystalML::Classification::NaiveBayesClassifier.new
       classifier.fit(data_tensor, target_tensor)
 
-      # Expected means and variances for each class (these are dummy values for illustration)
+      # Expected means and variances for each class
       expected_means_for_class_0 = [5.0, 3.25, 1.4, 0.2]
       expected_variances_for_class_0 = [0.01, 0.0625, 0.0, 0.0]
       expected_means_for_class_1 = [6.4333, 3.1333, 4.7666, 1.5666]
@@ -71,7 +71,7 @@ describe CrystalML::Classification::NaiveBayesClassifier do
       classifier = CrystalML::Classification::NaiveBayesClassifier.new
       classifier.fit(data_array, target_array)
 
-      # Expected means and variances for each class (these are dummy values for illustration)
+      # Expected means and variances for each class 
       expected_means_for_class_0 = [5.0, 3.25, 1.4, 0.2]
       expected_variances_for_class_0 = [0.01, 0.0625, 0.0, 0.0]
       expected_means_for_class_1 = [6.4333, 3.1333, 4.7666, 1.5666]
@@ -96,7 +96,7 @@ describe CrystalML::Classification::NaiveBayesClassifier do
       classifier = CrystalML::Classification::NaiveBayesClassifier.new
       classifier.fit(data_df, target_df)
 
-      # Expected means and variances for each class (these are dummy values for illustration)
+      # Expected means and variances for each class 
       expected_means_for_class_0 = [5.0, 3.25, 1.4, 0.2]
       expected_variances_for_class_0 = [0.01, 0.0625, 0.0, 0.0]
       expected_means_for_class_1 = [6.4333, 3.1333, 4.7666, 1.5666]

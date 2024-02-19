@@ -1,7 +1,7 @@
 # src/crystal_ml/classification/naive_bayes.cr
 
 require "../base.cr"
-require "num" # Replace with your actual tensor library
+require "num" 
 
 module CrystalML
   module Classification

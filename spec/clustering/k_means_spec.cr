@@ -44,29 +44,21 @@ describe CrystalML::Clustering::KMeans do
     end
 
     it "clusters data correctly using dataframes" do
-
-      # Create KMeans instance
       kmeans = CrystalML::Clustering::KMeans.new(n_clusters: 3)
       kmeans.fit(data_df)
 
-      # Predict clusters
       predictions = kmeans.predict(data_df)
 
-      # Check if the number of unique clusters matches the number of centroids
       unique_clusters = predictions.uniq.size
       unique_clusters.should eq 3
     end
 
     it "clusters data correctly using arrays" do
-
-      # Create KMeans instance
       kmeans = CrystalML::Clustering::KMeans.new(n_clusters: 3)
       kmeans.fit(data_array)
 
-      # Predict clusters
       predictions = kmeans.predict(data_array)
 
-      # Check if the number of unique clusters matches the number of centroids
       unique_clusters = predictions.uniq.size
       unique_clusters.should eq 3
     end

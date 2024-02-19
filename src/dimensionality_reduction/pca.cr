@@ -26,8 +26,6 @@ module CrystalML
         # Find the eigenvalues and eigenvectors of the covariance matrix
         eigenvalues, eigenvectors = covariance_matrix.eig
 
-        #eigenvectors = eigenvectors.transpose
-
         # Sort the eigenvectors based on eigenvalues in descending order
         sorted_indices = eigenvalues.to_a.each_with_index.to_a.sort_by { |value, _| -value }.map { |pair| pair.last }
 

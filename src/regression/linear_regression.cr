@@ -12,7 +12,6 @@ module CrystalML
         @coefficients = nil
       end
 
-      # Update the fit method to accept Tensor objects
       def fit(data : Tensor(Float64, CPU(Float64)), target : Tensor(Float64, CPU(Float64)))
         # Manually augment the data with a column of ones for the intercept term
         ones = Tensor(Float64, CPU(Float64)).ones([data.shape[0], 1])
@@ -20,7 +19,6 @@ module CrystalML
       
         # Transpose the target tensor if necessary to ensure proper dimensions
         y_data = if target.shape.size == 1
-          # Assuming target is a 1D tensor, reshape it to 2D
           Tensor(Float64, CPU(Float64)).from_array(target.to_a.map { |val| [val] })
         else
           target
@@ -40,7 +38,6 @@ module CrystalML
         end
       end
 
-      # Update the predict method to accept and return Tensor objects
       def predict(data : Tensor(Float64, CPU(Float64))) : Tensor(Float64, CPU(Float64))
         raise "Model not fitted" unless @coefficients
 

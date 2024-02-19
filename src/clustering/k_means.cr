@@ -13,12 +13,10 @@ module CrystalML
       property max_iters : Int32
       property tolerance : Float64
 
-      # Constructor
       def initialize(@n_clusters : Int32 = 8, @max_iters : Int32 = 300, @tolerance : Float64 = 0.0001)
         @centroids = Tensor(Float64, CPU(Float64)).new([0]) # Placeholder initialization
       end
 
-      # Fit the model to the data
       def fit(data : Tensor(Float64, CPU(Float64)))
         # Randomly initialize centroids
         @centroids = Tensor(Float64, CPU(Float64)).from_array(data.sample(@n_clusters))
@@ -28,11 +26,9 @@ module CrystalML
           new_centroids = update_centroids(data, clusters)
 
           handle_empty_clusters!(data, new_centroids, clusters)
-
           break if converged?(new_centroids)
 
           @centroids = new_centroids
-
         end
       end
 
@@ -122,7 +118,7 @@ module CrystalML
       end
 
       private def mean(tensor : Tensor(Float64, CPU(Float64))) : Tensor(Float64, CPU(Float64))
-        tensor.mean(axis: 0) # Assuming mean calculation along a specific axis is supported
+        tensor.mean(axis: 0)
       end
     end
   end

@@ -39,8 +39,6 @@ describe CrystalML::Regression::LinearRegression do
 
   describe "#fit and #predict" do
     it "fits a linear model and makes predictions using tensors" do
-      # Example data (simple linear relationship)
-
       # Initialize and fit the model
       model = CrystalML::Regression::LinearRegression.new
       model.fit(data_tensor, target_tensor)
@@ -50,7 +48,6 @@ describe CrystalML::Regression::LinearRegression do
       coefficients = model.coefficients.not_nil! 
       coefficients.shape[0].should eq 3 # including intercept
 
-      # The first coefficient (intercept) should be close to a specific value
       expected_intercept = 1.0
       coefficients[0, 0].value.should be_close(expected_intercept, 0.001)
 
@@ -63,22 +60,16 @@ describe CrystalML::Regression::LinearRegression do
     end
 
     it "fits a linear model and makes predictions using arrays" do
-      # Example data (simple linear relationship)
-
-      # Initialize and fit the model
       model = CrystalML::Regression::LinearRegression.new
       model.fit(data_array, target_array)
 
-      # Check if coefficients are not nil and match expected pattern
       model.coefficients.should_not be_nil
       coefficients = model.coefficients.not_nil! 
       coefficients.shape[0].should eq 3 # including intercept
 
-      # The first coefficient (intercept) should be close to a specific value
       expected_intercept = 1.0
       coefficients[0, 0].value.should be_close(expected_intercept, 0.001)
 
-      # Make predictions and check their accuracy
       predictions = model.predict(data_array)
       predictions.shape[0].should eq target_array.size
       predictions.to_a.flatten.each_with_index do |prediction, i|
@@ -87,9 +78,6 @@ describe CrystalML::Regression::LinearRegression do
     end
 
     it "fits a linear model and makes predictions using a dataframe" do
-      # Example data (simple linear relationship)
-
-      # Initialize and fit the model
       model = CrystalML::Regression::LinearRegression.new
       model.fit(data_df, target_df)
 
@@ -98,11 +86,9 @@ describe CrystalML::Regression::LinearRegression do
       coefficients = model.coefficients.not_nil! 
       coefficients.shape[0].should eq 3 # including intercept
 
-      # The first coefficient (intercept) should be close to a specific value
       expected_intercept = 1.0
       coefficients[0, 0].value.should be_close(expected_intercept, 0.001)
 
-      # Make predictions and check their accuracy
       predictions = model.predict(data_df)
       predictions.shape[0].should eq target_array.size
       predictions.to_a.flatten.each_with_index do |prediction, i|
