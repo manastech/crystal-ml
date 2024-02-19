@@ -1,0 +1,18 @@
+name: crystal-ml
+version: 0.1.0
+
+authors:
+  - Leandro Radusky <leandro.radusky@gmail.com>
+
+crystal: ">= 1.0.0"
+
+license: MIT
+
+description: >
+  A machine learning library for Crystal, inspired by scikit-learn.
+
+dependencies:
+  num:
+    github: crystal-data/num.cr
+  crysda:
+    github: naqvis/CrysDA
