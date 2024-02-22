@@ -20,7 +20,7 @@ module CrystalML
       fit(data_tensor, target_tensor)
     end
 
-    def predict(data : Tensor(Float64, CPU(Float64)) | Array(Array(Float64)) | Crysda::DataFrame) : Tensor(Float64, CPU(Float64))
+    def predict(data : Array(Array(Float64)) | Crysda::DataFrame) : Tensor(Float64, CPU(Float64))
       data_tensor = data.is_a?(Tensor) ? data : to_tensor(data)
       predict(data_tensor)
     end
@@ -29,7 +29,7 @@ module CrystalML
   abstract class UnsupervisedEstimator < BaseEstimator
     abstract def fit(data : Tensor(Float64, CPU(Float64)))
 
-    def fit(data : Tensor(Float64, CPU(Float64)) | Array(Array(Float64)) | Crysda::DataFrame)
+    def fit(data : Array(Array(Float64)) | Crysda::DataFrame)
       data_tensor = data.is_a?(Tensor) ? data : to_tensor(data)
       fit(data_tensor)
     end
@@ -44,7 +44,7 @@ module CrystalML
   abstract class Clusterer < UnsupervisedEstimator
     abstract def predict(data : Tensor(Float64, CPU(Float64))) : Array(Int32)
 
-    def predict(data : Tensor(Float64, CPU(Float64)) | Array(Array(Float64)) | Crysda::DataFrame) : Array(Int32)
+    def predict(data : Array(Array(Float64)) | Crysda::DataFrame) : Array(Int32)
       data_tensor = data.is_a?(Tensor) ? data : to_tensor(data)
       predict(data_tensor).to_a
     end
@@ -53,7 +53,7 @@ module CrystalML
   abstract class Transformer < UnsupervisedEstimator
     abstract def transform(data : Tensor(Float64, CPU(Float64))) : Tensor(Float64, CPU(Float64))
 
-    def transform(data : Tensor(Float64, CPU(Float64)) | Array(Array(Float64)) | Crysda::DataFrame) : Tensor(Float64, CPU(Float64))
+    def transform(data : Array(Array(Float64)) | Crysda::DataFrame) : Tensor(Float64, CPU(Float64))
       data_tensor = data.is_a?(Tensor) ? data : to_tensor(data)
       transform(data_tensor)
     end
