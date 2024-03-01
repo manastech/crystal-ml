@@ -5,7 +5,8 @@ require "num"
 
 module CrystalML
   module Classification
-    class NaiveBayesClassifier < Classifier
+    class NaiveBayesClassifier < SupervisedEstimator
+      include Classifier
       property means : Hash(Float64, Tensor(Float64, CPU(Float64)))
       property variances : Hash(Float64, Tensor(Float64, CPU(Float64)))
 

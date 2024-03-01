@@ -5,7 +5,8 @@ require "num"
 
 module CrystalML
   module DimensionalityReduction
-    class PCA < Transformer
+    class PCA < UnsupervisedEstimator
+      include Transformer
       property components : Tensor(Float64, CPU(Float64))
       property explained_variance : Array(Float64)
       property num_components : Int32

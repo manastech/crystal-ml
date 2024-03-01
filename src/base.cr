@@ -2,14 +2,16 @@ require "num"
 require "crysda"
 
 module CrystalML
-  abstract class BaseEstimator
+  module BaseEstimator
     protected def to_tensor(data : Crysda::DataFrame | Array(Array(Float64))| Array(Float64)) : Tensor(Float64, CPU(Float64))
       data_array = data.is_a?(Crysda::DataFrame) ? data.rows.map { |row| row.values.map(&.as_f) } : data
       Tensor(Float64, CPU(Float64)).from_array(data_array.to_a)
     end
   end
 
-  abstract class SupervisedEstimator < BaseEstimator
+  abstract class SupervisedEstimator
+    include BaseEstimator
+
     abstract def fit(data : Tensor(Float64, CPU(Float64)), target : Tensor(Float64, CPU(Float64)))
     abstract def predict(data : Tensor(Float64, CPU(Float64))) : Tensor(Float64, CPU(Float64))
 
@@ -26,7 +28,9 @@ module CrystalML
     end
   end
 
-  abstract class UnsupervisedEstimator < BaseEstimator
+  abstract class UnsupervisedEstimator
+    include BaseEstimator
+
     abstract def fit(data : Tensor(Float64, CPU(Float64)))
 
     def fit(data : Array(Array(Float64)) | Crysda::DataFrame)
@@ -35,13 +39,13 @@ module CrystalML
     end
   end
 
-  abstract class Regressor < SupervisedEstimator
+  module Regressor
   end
 
-  abstract class Classifier < SupervisedEstimator
+  module Classifier
   end
 
-  abstract class Clusterer < UnsupervisedEstimator
+  module Clusterer
     abstract def predict(data : Tensor(Float64, CPU(Float64))) : Array(Int32)
 
     def predict(data : Array(Array(Float64)) | Crysda::DataFrame) : Array(Int32)
@@ -50,7 +54,7 @@ module CrystalML
     end
   end
 
-  abstract class Transformer < UnsupervisedEstimator
+  module Transformer
     abstract def transform(data : Tensor(Float64, CPU(Float64))) : Tensor(Float64, CPU(Float64))
 
     def transform(data : Array(Array(Float64)) | Crysda::DataFrame) : Tensor(Float64, CPU(Float64))

@@ -5,7 +5,9 @@ require "num"
 
 module CrystalML
   module Regression
-    class LinearRegression < Regressor
+    class LinearRegression < SupervisedEstimator
+      include Regressor
+      
       property coefficients : Tensor(Float64, CPU(Float64))?
 
       def initialize

@@ -7,7 +7,9 @@ require "random"
 
 module CrystalML
   module Clustering
-    class KMeans < Clusterer
+    class KMeans < UnsupervisedEstimator
+      include Clusterer
+      
       getter centroids : Tensor(Float64, CPU(Float64))
       property n_clusters : Int32
       property max_iters : Int32
