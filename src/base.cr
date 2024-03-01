@@ -2,35 +2,25 @@ require "num"
 require "crysda"
 
 module CrystalML
-  module BaseEstimator
+  abstract class BaseEstimator
     protected def to_tensor(data : Crysda::DataFrame | Array(Array(Float64))| Array(Float64)) : Tensor(Float64, CPU(Float64))
       data_array = data.is_a?(Crysda::DataFrame) ? data.rows.map { |row| row.values.map(&.as_f) } : data
       Tensor(Float64, CPU(Float64)).from_array(data_array.to_a)
     end
   end
 
-  abstract class SupervisedEstimator
-    include BaseEstimator
-
+  abstract class SupervisedEstimator < BaseEstimator
     abstract def fit(data : Tensor(Float64, CPU(Float64)), target : Tensor(Float64, CPU(Float64)))
-    abstract def predict(data : Tensor(Float64, CPU(Float64))) : Tensor(Float64, CPU(Float64))
-
+    
     def fit(data : Tensor(Float64, CPU(Float64)) | Array(Array(Float64)) | Crysda::DataFrame,
             target : Tensor(Float64, CPU(Float64)) | Array(Float64) | Crysda::DataFrame)
       data_tensor = data.is_a?(Tensor) ? data : to_tensor(data)
       target_tensor = target.is_a?(Tensor) ? target : to_tensor(target)
       fit(data_tensor, target_tensor)
     end
-
-    def predict(data : Array(Array(Float64)) | Crysda::DataFrame) : Tensor(Float64, CPU(Float64))
-      data_tensor = data.is_a?(Tensor) ? data : to_tensor(data)
-      predict(data_tensor)
-    end
   end
 
-  abstract class UnsupervisedEstimator
-    include BaseEstimator
-
+  abstract class UnsupervisedEstimator < BaseEstimator
     abstract def fit(data : Tensor(Float64, CPU(Float64)))
 
     def fit(data : Array(Array(Float64)) | Crysda::DataFrame)
@@ -40,9 +30,21 @@ module CrystalML
   end
 
   module Regressor
+    abstract def predict(data : Tensor(Float64, CPU(Float64))) : Tensor(Float64, CPU(Float64))
+
+    def predict(data : Array(Array(Float64)) | Crysda::DataFrame) : Tensor(Float64, CPU(Float64))
+      data_tensor = data.is_a?(Tensor) ? data : to_tensor(data)
+      predict(data_tensor)
+    end
   end
 
   module Classifier
+    abstract def predict(data : Tensor(Float64, CPU(Float64))) : Tensor(Float64, CPU(Float64))
+
+    def predict(data : Array(Array(Float64)) | Crysda::DataFrame) : Tensor(Float64, CPU(Float64))
+      data_tensor = data.is_a?(Tensor) ? data : to_tensor(data)
+      predict(data_tensor)
+    end
   end
 
   module Clusterer
