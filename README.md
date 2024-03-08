@@ -94,6 +94,7 @@ The return values for `predict`, `fit` and `transform` methods along the library
   - [ ] ...
 - Transformation
   - [x] PCA
+  - [x] LDA
   - [ ] ICA
   - [ ] kPCA
   - [ ] ...
