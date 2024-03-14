@@ -39,6 +39,20 @@ module CrystalML
 
         x_matrix.matmul(@mean.not_nil!)
       end
+
+      def predict_variances(data : Tensor(Float64, CPU(Float64))) : Tensor(Float64, CPU(Float64))
+
+        ones = Tensor(Float64, CPU(Float64)).ones([data.shape[0], 1])
+        x_matrix = Num.hstack([ones, data])
+        
+        x_covariance = x_matrix.matmul(@covariance.not_nil!)
+        x_covariance_xt = x_covariance.matmul(x_matrix.transpose)
+        
+        # Extract diagonal elements to get variances for each prediction and add 1/@beta
+        predictive_variances = x_covariance_xt.diagonal.map { |var| var + 1.0 / @beta }
+
+        predictive_variances
+      end
     end
   end
 end

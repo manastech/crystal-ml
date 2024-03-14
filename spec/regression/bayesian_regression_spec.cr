@@ -46,4 +46,19 @@ describe CrystalML::Regression::BayesianRegression do
     end
   end
 
+  describe "#predict_variances" do
+    it "makes predictions with variances using tensors" do
+      model = CrystalML::Regression::BayesianRegression.new
+      model.fit(data_tensor, target_tensor)
+
+      variances = model.predict_variances(data_tensor)
+
+      variances.should be_a Tensor(Float64, CPU(Float64))
+      variances.shape[0].should eq target_tensor.shape[0]
+
+      variances.to_a.flatten.each do |variance|
+        variance.should be > 0
+      end
+    end
+  end
 end
