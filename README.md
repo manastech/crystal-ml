@@ -88,7 +88,8 @@ The return values for `predict`, `fit` and `transform` methods along the library
   - [ ] Random forest
   - [ ] ...
 - Regression
-  - [x] LinearRegression
+  - [x] Linear
+  - [x] Bayesian Ridge
   - [ ] Ordinary Least Squares
   - [ ] Nearest neighbors
   - [ ] Random forest
