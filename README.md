@@ -76,13 +76,13 @@ The return values for `predict`, `fit` and `transform` methods along the library
 
 - Clustering
   - [x] KMeans
-  - [x] BayesianRegression
   - [ ] Affinity propagation
   - [ ] Spectral
   - [ ] DBSCAN
   - [ ] ...
 - Classification
   - [x] NaiveBayes
+  - [x] Ridge (Binary)
   - [ ] Gradient boosting
   - [ ] Nearest neighbors
   - [ ] Random forest
