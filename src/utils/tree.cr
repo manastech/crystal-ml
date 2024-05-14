@@ -52,14 +52,30 @@ module CrystalML
       protected def predict_row(node : Node?, row : Tensor(Float64, CPU(Float64))) : Float64
         return Float64::INFINITY if node.nil? # TODO: Check if this is a reachable condition
         return node.value.not_nil! if node.feature_index.nil?
-      
+        
         if row[node.feature_index.not_nil!].value < node.threshold.not_nil!
           predict_row(node.left, row)
         else
           predict_row(node.right, row)
         end
       end
-      
+
+      def print_tree()
+        print_tree_recursive(@root, 0)
+      end
+
+      def print_tree_recursive(node : Tree::Node | Nil, depth : Int32)
+        return if node.nil?
+        if node.is_leaf?
+          puts "#{depth}Predict: #{node.value}"
+          return
+        end
+
+        puts "#{depth}Feature #{node.feature_index} < #{node.threshold}"
+        print_tree_recursive(node.left, depth + 1)
+        puts "#{depth}Feature #{node.feature_index} >= #{node.threshold}"
+        print_tree_recursive(node.right, depth + 1)
+      end
     end
   end
 end

@@ -31,23 +31,6 @@ module CrystalML
         Tree::Node.new(feature_index: best_feature, threshold: best_threshold, left: left_node, right: right_node)
       end
 
-      def print_tree()
-        print_tree_recursive(@root, 0)
-      end
-
-      def print_tree_recursive(node : Tree::Node | Nil, depth : Int32)
-        return if node.nil?
-        if node.is_leaf?
-          puts "#{depth}Predict: #{node.value}"
-          return
-        end
-
-        puts "#{depth}Feature #{node.feature_index} < #{node.threshold}"
-        print_tree_recursive(node.left, depth + 1)
-        puts "#{depth}Feature #{node.feature_index} >= #{node.threshold}"
-        print_tree_recursive(node.right, depth + 1)
-      end
-      
       private def get_best_split(data : Tensor(Float64, CPU(Float64)), target : Tensor(Float64, CPU(Float64))) : Tuple(Int32?, Float64?)
         best_gini = Float64::INFINITY
         best_feature = nil
