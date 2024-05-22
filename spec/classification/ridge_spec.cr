@@ -30,8 +30,6 @@ describe CrystalML::Classification::RidgeClassifier do
       classifier = CrystalML::Classification::RidgeClassifier.new(alpha: 1.0)
       classifier.fit(data_tensor, target_tensor)
       
-      puts "Coefficients: #{classifier.coef_} Intercept: #{classifier.intercept_}"
-
       predictions = classifier.predict(test_data_tensor).to_a
       predictions.should eq([1.0, 0.0])
     end

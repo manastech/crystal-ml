@@ -4,7 +4,7 @@ require "num"
 
 module CrystalML
   module Classification
-    class RandomForestClassifier
+    class RandomForestClassifier < SupervisedEstimator
       include Classifier
       property trees : Array(DecisionTreeClassifier)
       property n_trees : Int32
