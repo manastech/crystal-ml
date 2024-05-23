@@ -13,7 +13,7 @@ module CrystalML
     abstract def fit(data : Tensor(Float64, CPU(Float64)), target : Tensor(Float64, CPU(Float64)))
     
     def fit(data : Tensor(Float64, CPU(Float64)) | Array(Array(Float64)) | Crysda::DataFrame,
-            target : Tensor(Float64, CPU(Float64)) | Array(Float64) | Crysda::DataFrame)
+            target : Tensor(Float64, CPU(Float64)) | Array(Array(Float64)) | Array(Float64) | Crysda::DataFrame)
       data_tensor = data.is_a?(Tensor) ? data : to_tensor(data)
       target_tensor = target.is_a?(Tensor) ? target : to_tensor(target).flat
       fit(data_tensor, target_tensor)

@@ -94,8 +94,32 @@ describe CrystalML::DimensionalityReduction::LDA do
 
       transformed_data = lda.transform(data_tensor)
 
-      # We won't know the expected transformed data without running the actual LDA algorithm
-      # So, this part is more about ensuring that your data is transformed correctly, i.e., it has the right shape
+      transformed_data.shape.should eq([10, 1]) # 10 samples and 1 dimension as a result of the transformation
+
+      (transformed_data - expected_transformed_data).each do |value|
+        value.abs.should be_close(0.0, 0.01)
+      end
+    end
+
+    it "transforms data correctly using dataframes" do
+      lda = CrystalML::DimensionalityReduction::LDA.new(1)
+      lda.fit(data_df, labels)
+
+      transformed_data = lda.transform(data_df)
+
+      transformed_data.shape.should eq([10, 1]) # 10 samples and 1 dimension as a result of the transformation
+
+      (transformed_data - expected_transformed_data).each do |value|
+        value.abs.should be_close(0.0, 0.01)
+      end
+    end
+
+    it "transforms data correctly using arrays" do
+      lda = CrystalML::DimensionalityReduction::LDA.new(1)
+      lda.fit(data_array, labels)
+
+      transformed_data = lda.transform(data_array)
+
       transformed_data.shape.should eq([10, 1]) # 10 samples and 1 dimension as a result of the transformation
 
       (transformed_data - expected_transformed_data).each do |value|

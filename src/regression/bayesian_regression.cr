@@ -29,6 +29,11 @@ module CrystalML
         # Posterior covariance matrix = (lambda*I + beta*X^T*X)^-1
         @covariance = (lambda_i + x_transpose.matmul(x_matrix) * @beta).inv
         
+        # If target is a 1D tensor, reshape it to a 2D tensor
+        if target.shape.size == 1
+          target = target.reshape([target.shape[0], 1])
+        end
+
         # Posterior mean = beta * covariance * X^T * y
         @mean = @covariance.matmul(x_transpose).matmul(target) * @beta
       end
@@ -41,7 +46,7 @@ module CrystalML
       end
 
       def predict_variances(data : Tensor(Float64, CPU(Float64))) : Tensor(Float64, CPU(Float64))
-
+        # TODO: predict variances should accept arrays and dataframes as well
         ones = Tensor(Float64, CPU(Float64)).ones([data.shape[0], 1])
         x_matrix = Num.hstack([ones, data])
         

@@ -37,6 +37,19 @@ describe CrystalML::DimensionalityReduction::PCA do
     [-0.73517866, 0.6778734]
   ]
 
+  expected_transformed_data_array = [
+    [-0.82797019, -0.17511531],
+    [ 1.77758033,  0.14285723],
+    [-0.99219749,  0.38437499],
+    [-0.27421042,  0.13041721],
+    [-1.67580142, -0.20949846],
+    [-0.9129491,   0.17528244],
+    [ 0.09910944, -0.3498247 ],
+    [ 1.14457216,  0.04641726],
+    [ 0.43804614,  0.01776463],
+    [ 1.22382056, -0.16267529]
+  ]
+
   describe "#fit" do
     it "computes principal components correctly using tensors as input" do
 
@@ -92,18 +105,42 @@ describe CrystalML::DimensionalityReduction::PCA do
 
       transformed_data = pca.transform(data_tensor)
 
-      expected_transformed_data_array = [
-        [-0.82797019, -0.17511531],
-        [ 1.77758033,  0.14285723],
-        [-0.99219749,  0.38437499],
-        [-0.27421042,  0.13041721],
-        [-1.67580142, -0.20949846],
-        [-0.9129491,   0.17528244],
-        [ 0.09910944, -0.3498247 ],
-        [ 1.14457216,  0.04641726],
-        [ 0.43804614,  0.01776463],
-        [ 1.22382056, -0.16267529]
-      ]
+      expected_transformed_data = Tensor(Float64, CPU(Float64)).from_array(expected_transformed_data_array)
+
+      i=0
+      transformed_data.each_axis(0) do |row|
+        row.size.should eq(2) # Check dimensionality
+        row.to_a.zip(expected_transformed_data[i].to_a).each do |transformed_value, expected_value|
+          transformed_value.should be_close(expected_value, 0.01)
+        end
+        i += 1
+      end
+    end
+
+    it "transforms data correctly using arrays" do
+      pca = CrystalML::DimensionalityReduction::PCA.new(2)
+      pca.fit(data_array)
+
+      transformed_data = pca.transform(data_array)
+
+      expected_transformed_data = Tensor(Float64, CPU(Float64)).from_array(expected_transformed_data_array)
+
+      i=0
+      transformed_data.each_axis(0) do |row|
+        row.size.should eq(2) # Check dimensionality
+        row.to_a.zip(expected_transformed_data[i].to_a).each do |transformed_value, expected_value|
+          transformed_value.should be_close(expected_value, 0.01)
+        end
+        i += 1
+      end
+    end
+
+    it "transforms data correctly using dataframes" do
+      pca = CrystalML::DimensionalityReduction::PCA.new(2)
+      pca.fit(data_df)
+
+      transformed_data = pca.transform(data_df)
+
       expected_transformed_data = Tensor(Float64, CPU(Float64)).from_array(expected_transformed_data_array)
 
       i=0

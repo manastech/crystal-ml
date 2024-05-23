@@ -4,7 +4,7 @@ require "num"
 
 module CrystalML
   module Regression
-    class RandomForestRegression
+    class RandomForestRegression < SupervisedEstimator
       include Regressor
       property trees : Array(DecisionTreeRegression)
       property n_trees : Int32
