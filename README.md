@@ -83,16 +83,18 @@ The return values for `predict`, `fit` and `transform` methods along the library
 - Classification
   - [x] NaiveBayes
   - [x] Ridge (Binary)
+  - [x] Decision trees
+  - [x] Random forest
   - [ ] Gradient boosting
   - [ ] Nearest neighbors
-  - [ ] Random forest
   - [ ] ...
 - Regression
   - [x] Linear
   - [x] Bayesian Ridge
+  - [x] Decision trees
+  - [x] Random forest
   - [ ] Ordinary Least Squares
   - [ ] Nearest neighbors
-  - [ ] Random forest
   - [ ] ...
 - Transformation
   - [x] PCA
